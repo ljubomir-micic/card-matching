@@ -30,8 +30,10 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.lab03ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.konfiguracijaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.predajaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,11 +50,19 @@
             // lab03ToolStripMenuItem
             // 
             this.lab03ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
             this.konfiguracijaToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.restartToolStripMenuItem,
+            this.predajaToolStripMenuItem});
             this.lab03ToolStripMenuItem.Name = "lab03ToolStripMenuItem";
             this.lab03ToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.lab03ToolStripMenuItem.Text = "menuStrip1";
+            // 
+            // restartToolStripMenuItem
+            // 
+            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+            this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restartToolStripMenuItem.Text = "Restart";
             // 
             // konfiguracijaToolStripMenuItem
             // 
@@ -65,6 +75,12 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // predajaToolStripMenuItem
+            // 
+            this.predajaToolStripMenuItem.Name = "predajaToolStripMenuItem";
+            this.predajaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.predajaToolStripMenuItem.Text = "Predaja";
             // 
             // Form1
             // 
@@ -88,6 +104,8 @@
         private System.Windows.Forms.ToolStripMenuItem lab03ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem konfiguracijaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem predajaToolStripMenuItem;
     }
 }
 

@@ -11,18 +11,18 @@ using Matrica = lab03.MyCheckBoxPolje;
 
 namespace lab03
 {
-    public partial class Konfiguracija : Form
-    {
+    // TODO: Dodaj textfield za broj elemenata i slika
+    public partial class Konfiguracija : Form {
         Matrica matrica; Label dimMat; TextBox rscLok; Button save;
-        int duz, sir;
 
-        int Duzina { get => 6; set {
-                duz = value;
+        int Duzina { get => Program.data.W; set {
+                Program.data.W = value;
                 dimMat.Text = value + " x " + Sirina;
             }
         }
-        int Sirina { get => 5; set {
-                sir = value;
+
+        int Sirina { get => Program.data.H; set {
+                Program.data.H = value;
                 dimMat.Text = Duzina + " x " + value; 
             }
         }
@@ -32,12 +32,23 @@ namespace lab03
             InitializeComponent();
 
             matrica = new Matrica(10, 10, size: 25);
+            matrica.Click += delegate {
+                int x = matrica.LastCheck >> 4, y = matrica.LastCheck & 0xF;
+                if (x < 5) x = 5;
+                if (y < 4) y = 4;
+                for (int i = 0; i < matrica.W; i++) {
+                    for (int j = 0; j < matrica.H; j++) {
+                        matrica[i, j].Vidljivost = (j <= y && i <= x);
+                        Duzina = x + 1;
+                        Sirina = y + 1;
+                        matrica.Invalidate();
+                    }
+                }
+            };
             rscLok = new TextBox() { Text = Program.data.resrcPath, Size = new Size(250, 0), Location = new Point((Width - 250)>>1, 20) };
             for (int i = 0; i < matrica.W; i++) {
                 for (int j = 0; j < matrica.H; j++) {
                     matrica[i, j].Location = new System.Drawing.Point((int) (matrica.dimPolja*1.2*i)+25, (int) (matrica.dimPolja*1.2*j)+((Width-matrica.dimPolja*matrica.H)>>1));
-                    matrica[i, j].MouseEnter += delegate { Duzina = i+1; Sirina = j+1; };
-                    matrica[i, j].MouseLeave += delegate { Duzina = Program.data.W; Sirina = Program.data.H; };
                     this.Controls.Add(matrica[i, j]);
                 }
             }
