@@ -9,12 +9,12 @@ using System.Xml;
 
 namespace lab03 {
     public class DataManager {
-        public string filePath { get; } = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ljubomirmicic19788-lab03.xml");
-        public string resrcPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        public static string filePath { get; } = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ljubomirmicic19788-lab03.xml");
+        public string resrcPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         public int W { get; set; } = 6;
         public int H { get; set; } = 5;
 
-        public void Save() {
+        public DataManager Save() {
             XmlTextWriter wr = null;
 
             try {
@@ -26,6 +26,8 @@ namespace lab03 {
             } finally {
                 if (wr!=null) wr.Close();
             }
+
+            return this;
         }
 
         public static DataManager Load() {
@@ -37,7 +39,7 @@ namespace lab03 {
                 return (DataManager)sr.Deserialize(rd);
             } catch (Exception err) { 
                 System.Diagnostics.Debug.WriteLine(err.Message);
-                return new DataManager();
+                return new DataManager().Save();
             } finally {
                 if (rd!=null) rd.Close(); // ovo nece da se izvrsi ako se izvrsi return u try bloku, po mom shvatanju, ali ovako je radjeno i na racunskim vezbama
             }
