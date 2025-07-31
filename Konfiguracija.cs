@@ -27,6 +27,16 @@ namespace lab03
             }
         }
 
+        int BrojParova { get => Program.data.P; set {
+                Program.data.P = value;
+            }
+        }
+
+        int BrojStranica { get => Program.data.S; set {
+                Program.data.S = value;
+            }
+        }
+
         public Konfiguracija()
         {
             InitializeComponent();

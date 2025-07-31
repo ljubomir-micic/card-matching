@@ -13,6 +13,8 @@ namespace lab03 {
         public string resrcPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         public int W { get; set; } = 6;
         public int H { get; set; } = 5;
+        public int P { get; set; } = 7;
+        public int S { get; set; } = 5;
 
         public DataManager Save() {
             XmlTextWriter wr = null;

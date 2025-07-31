@@ -91,6 +91,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -105,13 +106,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Extensions\Extensions.csproj">
-      <Project>{8cac4f50-0557-4b5e-9d24-81a71cb343d7}</Project>
-      <Name>Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="DataModels\DataModels.csproj">
       <Project>{e7751de7-c1bf-42e8-b295-209e1649f4f3}</Project>
       <Name>DataModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="Extensions\Extensions.csproj">
+      <Project>{8cac4f50-0557-4b5e-9d24-81a71cb343d7}</Project>
+      <Name>Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

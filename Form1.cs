@@ -44,7 +44,7 @@ namespace lab03
 
             NovaIgra();
 
-            timer.Tick += delegate { this.label1.Text = Ekstenzije.ToTime(++elapsed); };
+            timer.Tick += delegate { this.label1.Text = Stoperica.ToTime(++elapsed); };
 
             this.SuspendLayout();
 
