@@ -15,39 +15,29 @@ namespace lab03
         int poeni;
 
         int Poeni {
-            get => poeni;
-            set {
-                poeni = value;
-                this.label1.Text = "\t"+(value*300).ToString();
-            }
+            get => tabla.BrPog;
+            set => tabla.BrPog = value;
         }
 
         void NovaIgra() {
             // TODO: Tabla mora da kreira uparene brojeve
-            tabla = new Tabla(Program.data.W, Program.data.H, jeKarta: true);
-            timer = new System.Windows.Forms.Timer() { Interval = 1000 };
-            timer.Start();
-        }
-
-        void Kraj() {
-            timer.Stop();
-            timer.Dispose();
-            timer = null;
-        }
-
-        public Form1() {
-            InitializeComponent();
-            this.Text = this.lab03ToolStripMenuItem.Text = "lab03";
-            this.label1 = new Label();
-            this.label1.Text = "";
-            this.label1.Dock = DockStyle.Bottom;
-
-            NovaIgra();
-
-            timer.Tick += delegate { this.label1.Text = Stoperica.ToTime(++elapsed); };
-
             this.SuspendLayout();
+            if (timer != null) {
+                Kraj(this, new EventArgs());
 
+                for (int i = 0; i < tabla.W; i++)
+                    for (int j = 0; j < tabla.H; j++)
+                        tabla[i, j].Dispose();
+            }
+            tabla = new Tabla(Program.data.W, Program.data.H, jeKarta: true);
+            tabla.Ende += new EventHandler(Kraj);
+
+            this.elapsed = 0;
+            
+            timer = new System.Windows.Forms.Timer() { Interval = 1000 };
+            timer.Tick += delegate { this.label1.Text = Stoperica.ToTime(++elapsed); };
+            timer.Start();
+            
             for (int i = 0; i < tabla.W; i++) {
                 for (int j = 0; j < tabla.H; j++) {
                     tabla[i, j].Location = new System.Drawing.Point((int) (tabla.dimPolja*1.1*i)+35, (int) (tabla.dimPolja*1.1*j)+this.menuStrip1.Height+32); // +2 zbog razdvajanja od menustripa
@@ -56,7 +46,7 @@ namespace lab03
                         if (((int) m.Tag) == 0) return;
                         if (crd!=-1) {
                             if ((int) (tabla[crd >> 4, crd & 0xF].Tag) == (int)(tabla[m.X, m.Y].Tag) && ((crd >> 4) != m.X || (crd & 0xF) != m.Y))
-                                Poeni++;
+                                Poeni+=2;
                             else {
                                 Thread.Sleep(500);
                                 tabla[m.X, m.Y].Checked = false;
@@ -71,17 +61,37 @@ namespace lab03
                     this.Controls.Add(tabla[i, j]);
                 }
             }
+            this.ResumeLayout(false);
+        }
+
+        void Kraj(object sender, EventArgs e) {
+            timer.Stop();
+            timer.Dispose();
+            new Ende(label1.Text).Show();
+            timer = null;
+        }
+
+        public Form1() {
+            InitializeComponent();
+            this.Text = this.lab03ToolStripMenuItem.Text = "lab03";
+            this.label1 = new Label();
+            this.label1.Text = "";
+            this.label1.Dock = DockStyle.Bottom;
+            this.label1.Padding = new Padding(10,0,0,0);
+
+            NovaIgra();
 
             this.Width = (int) (Program.data.W * tabla.dimPolja * 1.1 + 80);
             this.Height = (int) (Program.data.H * tabla.dimPolja * 1.1 + this.menuStrip1.Height + 100);
             this.restartToolStripMenuItem.Click += delegate { NovaIgra(); }; // TODO: Otkloniti bag
             this.konfiguracijaToolStripMenuItem.Click += delegate {
                 Konfiguracija k = new Konfiguracija();
+                if (timer != null) timer.Stop();
                 k.ShowDialog();
+                if (timer != null) timer.Start();
             };
             this.aboutToolStripMenuItem.Click += delegate { new AboutForm().Show(); };
             this.Controls.Add(label1);
-            this.ResumeLayout(false);
         }
     }
 }

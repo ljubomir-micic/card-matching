@@ -15,7 +15,16 @@ namespace lab03 {
     public class MyCheckBoxPolje {
         MyCheckBox[,] polje; Dictionary<int, bool> praznaPolja;
         public event EventHandler Click = delegate { };
+        public event EventHandler Ende = delegate { };
+        int brPog = 0;
 
+        public int BrPog {
+            get => brPog;
+            set {
+                brPog = value;
+                if (value == W*H-praznaPolja.Count) Ende.Invoke(this, EventArgs.Empty);
+            }
+        }
         public int W { get; set; }
         public int H { get; set; }
         public int dimPolja { get => polje == null ? 45 : polje[0, 0].Dim; }
@@ -34,7 +43,7 @@ namespace lab03 {
             polje = new MyCheckBox[W, H];
             for (int i = 0; i < W; i++)
                 for (int j = 0; j < H; j++) {
-                    polje[i, j] = new MyCheckBox(broj: jeKarta ? numberGenerator.getNumber() : 0, dim: size, jeKarta: jeKarta) { X = i, Y = j };
+                    polje[i, j] = new MyCheckBox(broj: jeKarta ? numberGenerator.getNumber(Form1.r) : 0, dim: size, jeKarta: jeKarta) { X = i, Y = j };
                     if (jeKarta && (int) (polje[i, j].Tag) == 0) { praznaPolja[(i<<4)+j] = true; }
                     polje[i, j].Click += delegate(object sender, EventArgs e) { MyCheckBox m = ((MyCheckBox) sender); if (m.jeKarta) return; LastCheck = (m.X << 4) + m.Y; Click.Invoke(this, new EventArgs()); };
                 }

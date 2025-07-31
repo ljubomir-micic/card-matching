@@ -18,8 +18,8 @@ namespace DataModels
 
         bool isEmpty { get { bool ie = true; for (int i = 0; i < niz.Length; i++) if (niz[i] != 0) ie = false; return ie; } }
 
-        public int getNumber() {
-            int ind = -1; Random r = new Random();
+        public int getNumber(Random r) {
+            int ind = -1;
             do {
                 ind = r.Next()%niz.Length;
             } while (niz[ind] == 0 && !isEmpty);

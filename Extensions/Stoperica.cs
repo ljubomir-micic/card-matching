@@ -8,7 +8,7 @@ namespace Extensions
 {
     public static class Stoperica {
         public static string ToTime(uint sec) {
-            return DateTime.Today.AddSeconds(sec).ToString("mm:ss");
+            return DateTime.Today.AddSeconds(sec).ToString("HH:mm:ss");
         }
     }
 }
