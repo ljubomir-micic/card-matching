@@ -27,6 +27,7 @@ namespace lab03
             p.CloseFigure();
             return p;
         }
+
         public Ende(string time)
         {
             InitializeComponent();

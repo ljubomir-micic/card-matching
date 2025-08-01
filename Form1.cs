@@ -19,7 +19,7 @@ namespace lab03
             set => tabla.BrPog = value;
         }
 
-        void NovaIgra() {
+        void NovaIgra(Tabla t = null) {
             // TODO: Tabla mora da kreira uparene brojeve
             this.SuspendLayout();
             if (timer != null) {
@@ -29,7 +29,7 @@ namespace lab03
                     for (int j = 0; j < tabla.H; j++)
                         tabla[i, j].Dispose();
             }
-            tabla = new Tabla(Program.data.W, Program.data.H, jeKarta: true);
+            tabla = t ?? new Tabla(Program.data.W, Program.data.H, jeKarta: true);
             tabla.Ende += new EventHandler(Kraj);
 
             this.elapsed = 0;
@@ -45,17 +45,21 @@ namespace lab03
                         MyCheckBox m = (MyCheckBox) sender;
                         if (((int) m.Tag) == 0) return;
                         if (crd!=-1) {
-                            if ((int) (tabla[crd >> 4, crd & 0xF].Tag) == (int)(tabla[m.X, m.Y].Tag) && ((crd >> 4) != m.X || (crd & 0xF) != m.Y))
-                                Poeni+=2;
+                            if ((crd >> 4) == m.X && (crd & 0xF) == m.Y) { tabla[m.X, m.Y].Checked = true; return; }
+                            
+                            if ((int) (tabla[crd >> 4, crd & 0xF].Tag) == (int)(tabla[m.X, m.Y].Tag)) Poeni+=2;
                             else {
                                 Thread.Sleep(500);
+                                MyCheckBox.Permissions = DataModels.Permissions.System;
                                 tabla[m.X, m.Y].Checked = false;
                                 tabla[crd >> 4, crd & 7].Checked = false;
+                                MyCheckBox.Permissions = DataModels.Permissions.User;
                             } 
                         
                             crd = -1;
                             return;
                         }
+                        // help bukv ako se klikne prvo ovo a otkriveno je ima da se postavi na crd -> problem je sto ne mogu da skontam da li je checked promenjeno sad ili pre
                         crd = ((m.X<<4)+m.Y); // najvise 9 sto pokriva 4 bita
                     };
                     this.Controls.Add(tabla[i, j]);
@@ -67,7 +71,9 @@ namespace lab03
         void Kraj(object sender, EventArgs e) {
             timer.Stop();
             timer.Dispose();
-            new Ende(label1.Text).Show();
+            if (sender is Tabla)
+            new Ende(label1.Text).Show(); // HWND nije sacuvan ali svakako ostaje dok se ne ugasi prozor, nakon toga ce automatski da se zatvori i
+                                          // dispozuje tako da ne bi trebalo da postoji ikakav mem leak iako moram da priznam ovako nikad nisam radio
             timer = null;
         }
 
@@ -92,6 +98,15 @@ namespace lab03
             };
             this.aboutToolStripMenuItem.Click += delegate { new AboutForm().Show(); };
             this.Controls.Add(label1);
+        }
+
+        // TODO: Ne isprobavati - radioaktivno
+        private void ucitajToolStripMenuItem_Click(object sender, EventArgs e) {
+            NovaIgra(Tabla.Load());
+        }
+
+        private void sacuvajToolStripMenuItem_Click(object sender, EventArgs e) {
+            tabla.Save();
         }
     }
 }

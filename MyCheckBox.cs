@@ -19,6 +19,7 @@ namespace lab03 {
         public int Dim { get; set; } = 45;
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
+        public static Permissions Permissions { get; set; } = Permissions.User;
         public new Image Image { get { try { return Image.FromFile(System.IO.Path.Combine(Program.data.resrcPath, this.broj.ToString() + ".png")); } catch { return null; } } }
         public Image BackImage {
             get {
@@ -32,12 +33,13 @@ namespace lab03 {
             this.jeKarta = jeKarta;
             Width = Height = Dim = dim;
             Vidljivost = false;
+            X = Y = 0;
+            Dim = 45;
         }
 
         protected override void OnCheckedChanged(EventArgs e)
         {
-            if (broj == 0 && Vidljivost) return; // TODO: ovde nesto logika ne valja -> ako se obicno polje duplo pritisne moze da se odcekira sto ne bi smelo
-                                                 //       Sa druge strane program sam ponekad vrsi odcekiranje pa treba omoguciti i to
+            if (Permissions == Permissions.User && Vidljivost) return;
             Vidljivost = Checked;
             Invalidate();
         }

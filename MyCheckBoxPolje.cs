@@ -77,7 +77,7 @@ namespace lab03 {
             }
         }
 
-        public MyCheckBoxPolje Load() {
+        public static MyCheckBoxPolje Load() {
             StreamReader rd = null;
 
             try {

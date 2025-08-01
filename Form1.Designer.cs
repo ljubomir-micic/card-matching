@@ -30,17 +30,21 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.lab03ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.konfiguracijaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.konfiguracijaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.igraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predajaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ucitajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sacuvajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lab03ToolStripMenuItem});
+            this.lab03ToolStripMenuItem,
+            this.igraToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -51,36 +55,63 @@
             // 
             this.lab03ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem,
-            this.konfiguracijaToolStripMenuItem,
-            this.restartToolStripMenuItem,
-            this.predajaToolStripMenuItem});
+            this.konfiguracijaToolStripMenuItem});
             this.lab03ToolStripMenuItem.Name = "lab03ToolStripMenuItem";
             this.lab03ToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.lab03ToolStripMenuItem.Text = "menuStrip1";
             // 
-            // restartToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
-            this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.restartToolStripMenuItem.Text = "Restart";
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // konfiguracijaToolStripMenuItem
             // 
             this.konfiguracijaToolStripMenuItem.Name = "konfiguracijaToolStripMenuItem";
-            this.konfiguracijaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.konfiguracijaToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.konfiguracijaToolStripMenuItem.Text = "Konfiguracija";
             // 
-            // aboutToolStripMenuItem
+            // igraToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.igraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.predajaToolStripMenuItem,
+            this.sacuvajToolStripMenuItem,
+            this.ucitajToolStripMenuItem,
+            this.restartToolStripMenuItem});
+            this.igraToolStripMenuItem.Name = "igraToolStripMenuItem";
+            this.igraToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.igraToolStripMenuItem.Text = "Igra";
+            // 
+            // restartToolStripMenuItem
+            // 
+            this.restartToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
+            this.restartToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+            this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restartToolStripMenuItem.Text = "Restart";
             // 
             // predajaToolStripMenuItem
             // 
+            this.predajaToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
+            this.predajaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.predajaToolStripMenuItem.Name = "predajaToolStripMenuItem";
             this.predajaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.predajaToolStripMenuItem.Text = "Predaja";
+            // 
+            // ucitajToolStripMenuItem
+            // 
+            this.ucitajToolStripMenuItem.Name = "ucitajToolStripMenuItem";
+            this.ucitajToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ucitajToolStripMenuItem.Text = "Ucitaj";
+            this.ucitajToolStripMenuItem.Click += new System.EventHandler(this.ucitajToolStripMenuItem_Click);
+            // 
+            // sacuvajToolStripMenuItem
+            // 
+            this.sacuvajToolStripMenuItem.Name = "sacuvajToolStripMenuItem";
+            this.sacuvajToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sacuvajToolStripMenuItem.Text = "Sacuvaj";
+            this.sacuvajToolStripMenuItem.Click += new System.EventHandler(this.sacuvajToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -106,6 +137,9 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem predajaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem igraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ucitajToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sacuvajToolStripMenuItem;
     }
 }
 
