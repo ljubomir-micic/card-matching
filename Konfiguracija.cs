@@ -49,7 +49,7 @@ namespace lab03
                 if (y < 4) y = 4;
                 for (int i = 0; i < matrica.W; i++) {
                     for (int j = 0; j < matrica.H; j++) {
-                        matrica[i, j].Vidljivost = (j <= y && i <= x);
+                        matrica[i, j].Checked = (j <= y && i <= x);
                         Duzina = x + 1;
                         Sirina = y + 1;
                         matrica.Invalidate();

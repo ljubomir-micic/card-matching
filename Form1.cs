@@ -1,5 +1,6 @@
 ﻿using Extensions;
 using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Tabla = lab03.MyCheckBoxPolje; // alias za lakse referenciranje [ime klase je takvo kakvo je da bi se znalo cemu sluzi klasa]
@@ -45,10 +46,14 @@ namespace lab03
                         MyCheckBox m = (MyCheckBox) sender;
                         if (((int) m.Tag) == 0) return;
                         if (crd!=-1) {
-                            if ((crd >> 4) == m.X && (crd & 0xF) == m.Y) { tabla[m.X, m.Y].Checked = true; return; }
+                            if ((crd >> 4) == m.X && (crd & 0xF) == m.Y) { return; }
+                            if (tabla[crd >> 4, crd & 0xF].Pogodak || tabla[m.X, m.Y].Pogodak) return;
                             
-                            if ((int) (tabla[crd >> 4, crd & 0xF].Tag) == (int)(tabla[m.X, m.Y].Tag)) Poeni+=2;
-                            else {
+                            if ((int) (tabla[crd >> 4, crd & 0xF].Tag) == (int)(tabla[m.X, m.Y].Tag)) {
+                                tabla[m.X, m.Y].Pogodak = true;
+                                tabla[crd >> 4, crd & 7].Pogodak = true;
+                                Poeni+=2;
+                            } else {
                                 Thread.Sleep(500);
                                 MyCheckBox.Permissions = DataModels.Permissions.System;
                                 tabla[m.X, m.Y].Checked = false;
@@ -60,7 +65,8 @@ namespace lab03
                             return;
                         }
                         // help bukv ako se klikne prvo ovo a otkriveno je ima da se postavi na crd -> problem je sto ne mogu da skontam da li je checked promenjeno sad ili pre
-                        crd = ((m.X<<4)+m.Y); // najvise 9 sto pokriva 4 bita
+                        if (!m.Pogodak)
+                            crd = ((m.X<<4)+m.Y); // najvise 9 sto pokriva 4 bita
                     };
                     this.Controls.Add(tabla[i, j]);
                 }
@@ -107,6 +113,35 @@ namespace lab03
 
         private void sacuvajToolStripMenuItem_Click(object sender, EventArgs e) {
             tabla.Save();
+        }
+
+        private void predajaToolStripMenuItem_Click(object sender, EventArgs e) {
+            ToolStripMenuItem mi = (ToolStripMenuItem) sender;
+            if (timer == null) {
+                for (int i = 0; i < tabla.W; i++)
+                for (int j = 0; j < tabla.H; j++) {
+                    MyCheckBox.Permissions = DataModels.Permissions.System;
+                    tabla[i, j].Checked = false;
+                    MyCheckBox.Permissions = DataModels.Permissions.User;
+                }
+                mi.Text = "Predaja";
+                mi.BackColor = System.Drawing.Color.IndianRed;
+                mi.ForeColor = System.Drawing.Color.White;
+                NovaIgra();
+                return;
+            }
+            
+            for (int i = 0; i < tabla.W; i++)
+                for (int j = 0; j < tabla.H; j++) {
+                    MyCheckBox.Permissions = DataModels.Permissions.System;
+                    tabla[i, j].Checked = true;
+                    MyCheckBox.Permissions = DataModels.Permissions.User;
+                }
+            
+            mi.Text = "Nova igra";
+            mi.BackColor = SystemColors.Control;
+            mi.ForeColor = System.Drawing.Color.Black;
+            Kraj(sender, e);
         }
     }
 }

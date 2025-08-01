@@ -1,6 +1,7 @@
 ﻿using DataModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace lab03 {
         int broj;
 
         public bool jeKarta { get; set; }
-        public bool Vidljivost { get; set; }
+        public bool Pogodak { get; set; }
         public int Dim { get; set; } = 45;
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
@@ -28,37 +29,37 @@ namespace lab03 {
             }
         }
 
-        public MyCheckBox(int broj = 0, int dim = 45, bool jeKarta = false) {
+        public MyCheckBox(int broj, int dim = 45, bool jeKarta = false) {
             Tag = this.broj = broj;
             this.jeKarta = jeKarta;
             Width = Height = Dim = dim;
-            Vidljivost = false;
+            Checked = Pogodak = false;
             X = Y = 0;
             Dim = 45;
         }
 
         protected override void OnCheckedChanged(EventArgs e)
         {
-            if (Permissions == Permissions.User && Vidljivost) return;
-            Vidljivost = Checked;
+            if (Permissions == Permissions.User && !Checked) Checked = true;
             Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e) {
             //base.OnPaint(pevent);
-            if (!Vidljivost && jeKarta)
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            if (!Checked && jeKarta)
                 e.Graphics.DrawImage(BackImage, 0, 0, Width, Height);
             else {
                 if (this.broj == 0) {
-                    e.Graphics.Clear(!Vidljivost ? Color.White : Color.Gold);
+                    e.Graphics.Clear(!Checked ? Color.White : Color.Gold);
                 } else {
                     e.Graphics.Clear(Color.White);
                     if (Image != null)
                         e.Graphics.DrawImage(Image, 0, 0, Width, Height);
                 }
             }
-
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.DrawRectangle(new Pen(Color.FromArgb(0, 50, 30)), new Rectangle(0,0,Width-1,Height-1));
+            // napravio bih i zaobljeni pravougaonik sa 4 ARC na ivicama ali zajsta nemam vremena za trosenje
         }
     }
 }
