@@ -21,15 +21,19 @@ namespace lab03
         }
 
         void NovaIgra(Tabla t = null) {
-            // TODO: Tabla mora da kreira uparene brojeve
+            // DONE: Tabla mora da kreira uparene brojeve
             this.SuspendLayout();
-            if (timer != null) {
+            if (timer != null)
                 Kraj(this, new EventArgs());
-
+            
+            if (tabla != null)
                 for (int i = 0; i < tabla.W; i++)
                     for (int j = 0; j < tabla.H; j++)
                         tabla[i, j].Dispose();
-            }
+            
+            this.predajaToolStripMenuItem.Text = "Predaja";
+            this.predajaToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
+            this.predajaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             tabla = t ?? new Tabla(Program.data.W, Program.data.H, jeKarta: true);
             tabla.Ende += new EventHandler(Kraj);
 
@@ -51,13 +55,13 @@ namespace lab03
                             
                             if ((int) (tabla[crd >> 4, crd & 0xF].Tag) == (int)(tabla[m.X, m.Y].Tag)) {
                                 tabla[m.X, m.Y].Pogodak = true;
-                                tabla[crd >> 4, crd & 7].Pogodak = true;
+                                tabla[crd >> 4, crd & 0xF].Pogodak = true;
                                 Poeni+=2;
                             } else {
                                 Thread.Sleep(500);
                                 MyCheckBox.Permissions = DataModels.Permissions.System;
                                 tabla[m.X, m.Y].Checked = false;
-                                tabla[crd >> 4, crd & 7].Checked = false;
+                                tabla[crd >> 4, crd & 0xF].Checked = false;
                                 MyCheckBox.Permissions = DataModels.Permissions.User;
                             } 
                         
@@ -75,6 +79,9 @@ namespace lab03
         }
 
         void Kraj(object sender, EventArgs e) {
+            this.predajaToolStripMenuItem.Text = "Nova igra";
+            this.predajaToolStripMenuItem.BackColor = SystemColors.Control;
+            this.predajaToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             timer.Stop();
             timer.Dispose();
             if (sender is Tabla)
@@ -95,7 +102,7 @@ namespace lab03
 
             this.Width = (int) (Program.data.W * tabla.dimPolja * 1.1 + 80);
             this.Height = (int) (Program.data.H * tabla.dimPolja * 1.1 + this.menuStrip1.Height + 100);
-            this.restartToolStripMenuItem.Click += delegate { NovaIgra(); }; // TODO: Otkloniti bag
+            this.restartToolStripMenuItem.Click += delegate { NovaIgra(); };
             this.konfiguracijaToolStripMenuItem.Click += delegate {
                 Konfiguracija k = new Konfiguracija();
                 if (timer != null) timer.Stop();
@@ -118,15 +125,6 @@ namespace lab03
         private void predajaToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripMenuItem mi = (ToolStripMenuItem) sender;
             if (timer == null) {
-                for (int i = 0; i < tabla.W; i++)
-                for (int j = 0; j < tabla.H; j++) {
-                    MyCheckBox.Permissions = DataModels.Permissions.System;
-                    tabla[i, j].Checked = false;
-                    MyCheckBox.Permissions = DataModels.Permissions.User;
-                }
-                mi.Text = "Predaja";
-                mi.BackColor = System.Drawing.Color.IndianRed;
-                mi.ForeColor = System.Drawing.Color.White;
                 NovaIgra();
                 return;
             }
@@ -138,9 +136,6 @@ namespace lab03
                     MyCheckBox.Permissions = DataModels.Permissions.User;
                 }
             
-            mi.Text = "Nova igra";
-            mi.BackColor = SystemColors.Control;
-            mi.ForeColor = System.Drawing.Color.Black;
             Kraj(sender, e);
         }
     }

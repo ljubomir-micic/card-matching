@@ -60,6 +60,9 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(286, 189);
+            this.MinimizeBox = false;
             this.Name = "Ende";
             this.Text = "Ende";
             this.ResumeLayout(false);

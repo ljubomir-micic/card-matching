@@ -33,10 +33,10 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.konfiguracijaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.igraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.predajaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ucitajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sacuvajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ucitajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,36 +83,36 @@
             this.igraToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.igraToolStripMenuItem.Text = "Igra";
             // 
-            // restartToolStripMenuItem
-            // 
-            this.restartToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
-            this.restartToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
-            this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.restartToolStripMenuItem.Text = "Restart";
-            // 
             // predajaToolStripMenuItem
             // 
             this.predajaToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
             this.predajaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.predajaToolStripMenuItem.Name = "predajaToolStripMenuItem";
-            this.predajaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.predajaToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.predajaToolStripMenuItem.Text = "Predaja";
             this.predajaToolStripMenuItem.Click += new System.EventHandler(this.predajaToolStripMenuItem_Click);
-            // 
-            // ucitajToolStripMenuItem
-            // 
-            this.ucitajToolStripMenuItem.Name = "ucitajToolStripMenuItem";
-            this.ucitajToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.ucitajToolStripMenuItem.Text = "Ucitaj";
-            this.ucitajToolStripMenuItem.Click += new System.EventHandler(this.ucitajToolStripMenuItem_Click);
             // 
             // sacuvajToolStripMenuItem
             // 
             this.sacuvajToolStripMenuItem.Name = "sacuvajToolStripMenuItem";
-            this.sacuvajToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sacuvajToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.sacuvajToolStripMenuItem.Text = "Sacuvaj";
             this.sacuvajToolStripMenuItem.Click += new System.EventHandler(this.sacuvajToolStripMenuItem_Click);
+            // 
+            // ucitajToolStripMenuItem
+            // 
+            this.ucitajToolStripMenuItem.Name = "ucitajToolStripMenuItem";
+            this.ucitajToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.ucitajToolStripMenuItem.Text = "Ucitaj";
+            this.ucitajToolStripMenuItem.Click += new System.EventHandler(this.ucitajToolStripMenuItem_Click);
+            // 
+            // restartToolStripMenuItem
+            // 
+            this.restartToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
+            this.restartToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+            this.restartToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.restartToolStripMenuItem.Text = "Restart";
             // 
             // Form1
             // 
@@ -120,7 +120,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);

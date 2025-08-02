@@ -32,15 +32,18 @@ namespace lab03 {
         public MyCheckBox(int broj, int dim = 45, bool jeKarta = false) {
             Tag = this.broj = broj;
             this.jeKarta = jeKarta;
-            Width = Height = Dim = dim;
+            base.Width = base.Height = Dim = dim;
             Checked = Pogodak = false;
             X = Y = 0;
             Dim = 45;
         }
+        
+        public new int Width { get => Dim; }
+        public new int Height { get => Dim; }
 
         protected override void OnCheckedChanged(EventArgs e)
         {
-            if (Permissions == Permissions.User && !Checked) Checked = true;
+            if (Permissions == Permissions.User && !Checked && jeKarta) Checked = true;
             Invalidate();
         }
 
