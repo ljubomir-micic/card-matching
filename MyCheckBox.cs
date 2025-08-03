@@ -15,13 +15,31 @@ namespace lab03 {
     public class MyCheckBox : CheckBox {
         int broj;
 
+        int cast() { string a = broj.ToString(); if (a.Length == 1) a = "0"+a; return ((a[0] - '0')<<4) + (a[1]-'0'); }
+        int cast(int broj) { return (broj>>4)*10 + (broj&0xF); }
+        public int VALUE {
+            get {
+                return ((((((((jeKarta ? 1 : 0) << 1) + (Pogodak ? 1 : 0)) << 4) + X) << 4) + Y) << 8) + cast();
+            } set {
+                broj = cast(value & 0xFF);
+                Tag = broj;
+                value >>= 8;
+                Y = value & 0xF;
+                X = (value >> 4)&0xF;
+                Checked = Pogodak = ((value & 0b100000000)>>8) == 1;
+                jeKarta = (value>>9) == 1;
+            }
+        }
         public bool jeKarta { get; set; }
         public bool Pogodak { get; set; }
         public int Dim { get; set; } = 45;
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
+        public new int Width { get => Dim; }
+        public new int Height { get => Dim; }
         public static Permissions Permissions { get; set; } = Permissions.User;
         public new Image Image { get { try { return Image.FromFile(System.IO.Path.Combine(Program.data.resrcPath, this.broj.ToString() + ".png")); } catch { return null; } } }
+        
         public Image BackImage {
             get {
                 Image i = (Image) lab03.Properties.Resources.back;
@@ -29,21 +47,20 @@ namespace lab03 {
             }
         }
 
+        public MyCheckBox() { base.Width = base.Height = this.Dim = 45; }
+
         public MyCheckBox(int broj, int dim = 45, bool jeKarta = false) {
-            Tag = this.broj = broj;
+            this.Tag = this.broj = broj;
             this.jeKarta = jeKarta;
-            base.Width = base.Height = Dim = dim;
-            Checked = Pogodak = false;
-            X = Y = 0;
-            Dim = 45;
+            base.Width = base.Height = this.Dim = dim;
+            this.Checked = this.Pogodak = false;
+            this.X = this.Y = 0;
+            this.Dim = 45;
         }
-        
-        public new int Width { get => Dim; }
-        public new int Height { get => Dim; }
 
         protected override void OnCheckedChanged(EventArgs e)
         {
-            if (Permissions == Permissions.User && !Checked && jeKarta) Checked = true;
+            if (Permissions == Permissions.User && !Checked && jeKarta) this.Checked = true;
             Invalidate();
         }
 

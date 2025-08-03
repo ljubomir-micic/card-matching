@@ -60,7 +60,7 @@ namespace lab03
             textBoxes = new TextBox[2];
             textBoxes[0] = new TextBox() { Text = Program.data.P.ToString(), Location = new Point(20, Height - 60 - 10) };
             textBoxes[1] = new TextBox() { Text = Program.data.S.ToString(), Location = new Point(Width - 40 - textBoxes[0].Width, Height - 60 - 10) };
-            for (int tb = 0; tb < 2; tb++) textBoxes[tb].KeyPress += (sender, e) => { if (!Char.IsDigit(e.KeyChar) || !Char.IsControl(e.KeyChar)) e.Handled = true; };
+            for (int tb = 0; tb < 2; tb++) textBoxes[tb].KeyPress += delegate(object sender, KeyPressEventArgs e) { if (!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar)) e.Handled = true; };
             for (int i = 0; i < matrica.W; i++) {
                 for (int j = 0; j < matrica.H; j++) {
                     matrica[i, j].Checked = (i < Duzina && j < Sirina);
@@ -70,7 +70,7 @@ namespace lab03
             }
             dimMat = new Label() { Text = Duzina + " x " + Sirina, Location = new Point(20, Height-80-10) };
             save = new Button() { Text = "Sacuvaj", Location = new Point(rscLok.Right + 5, rscLok.Top), Width = 65 };
-            save.Click += delegate { Program.data.resrcPath = rscLok.Text; Program.data.W = Duzina; Program.data.H = Sirina; Program.data.P = int.Parse(textBoxes[0].Text); Program.data.S = int.Parse(textBoxes[1].Text); Program.data.Save(); };
+            save.Click += delegate { Program.data.resrcPath = rscLok.Text; Program.data.W = Duzina; Program.data.H = Sirina; Program.data.P = int.Parse(textBoxes[0].Text); Program.data.S = int.Parse(textBoxes[1].Text); Program.data.Save(); this.Close(); };
             this.Controls.Add(rscLok);
             this.Controls.Add(save);
             this.Controls.Add(dimMat);

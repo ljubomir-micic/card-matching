@@ -1,4 +1,5 @@
 ﻿using DataModels;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,31 @@ namespace lab03 {
         public event EventHandler Ende = delegate { };
         int brPog = 0;
 
-        public MyCheckBox[,] Polje { get { return polje; } set { } }
+        public uint Elapsed { get; set; } = 0;
+        public int W { get; set; }
+        public int H { get; set; }
+
+        [XmlArray("PoljePodaci")]
+        [XmlArrayItem("PoljePodaciElement")]
+        public int[] PoljePodaci {
+            get {
+                var lista = new LinkedList<int>();
+                for (int i = 0; i < W; i++)
+                    for (int j = 0; j < H; j++) {
+                        lista.AddFirst(polje[i, j].VALUE);
+                    }
+                return lista.ToArray();
+            } set {
+                praznaPolja = new Dictionary<int, bool>();
+                for (int i = 0; i < value.Length; i++)
+                    praznaPolja[(value[i] >> 8) & 0xFF] = true;
+                polje = new MyCheckBox[W, H];
+                for (int i = 0; i < value.Length; i++) {
+                    int x = (value[i] >> 12) & 0xF, y = (value[i] >> 8) & 0xF;
+                    polje[x, y] = new MyCheckBox() { VALUE = (value[i]) };
+                }
+            }
+        }
 
         public int BrPog {
             get => brPog;
@@ -27,15 +52,13 @@ namespace lab03 {
                 if (value == W*H-praznaPolja.Count) Ende.Invoke(this, EventArgs.Empty);
             }
         }
-        public int W { get; set; }
-        public int H { get; set; }
         public int dimPolja { get => polje == null ? 45 : polje[0, 0].Dim; }
         public int LastCheck { get; set; } = -1;
         int BrojParova { get => Program.data.P; }
         int BrojSlika { get => Program.data.S; }
 
         // *U pokusaju da se naucim lepo da projektujem klase cak i u C# po Single Responsibility principu pored navike za spaghetti code*
-        public MyCheckBoxPolje() { }
+        public MyCheckBoxPolje() { this.praznaPolja = new Dictionary<int, bool>(); }
         public MyCheckBoxPolje(bool jeKarta = false) : this(6, 5, jeKarta: jeKarta) { }
         public MyCheckBoxPolje(int x, int y, int size = 45, bool jeKarta = false) {
             praznaPolja = new Dictionary<int, bool>();
@@ -81,20 +104,19 @@ namespace lab03 {
             }
         }
 
-        public static MyCheckBoxPolje Load() {
+        // Ok ovo me je namucilo previse
+        public static MyCheckBoxPolje Load(string filename) {
             StreamReader rd = null;
 
             try {
-                OpenFileDialog fileDialog = new OpenFileDialog();
-                fileDialog.ShowDialog();
-                rd = new StreamReader(fileDialog.FileName, Encoding.UTF8);
+                rd = new StreamReader(filename, Encoding.UTF8);
                 XmlSerializer sr = new XmlSerializer(typeof(MyCheckBoxPolje));
                 return (MyCheckBoxPolje)sr.Deserialize(rd);
             } catch (Exception err) { 
                 System.Diagnostics.Debug.WriteLine(err.Message);
                 return new MyCheckBoxPolje();
             } finally {
-                if (rd!=null) rd.Close(); // ovo nece da se izvrsi ako se izvrsi return u try bloku, po mom shvatanju, ali ovako je radjeno i na racunskim vezbama
+                if (rd!=null) rd.Close();
             }
         }
     }
