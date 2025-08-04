@@ -35,7 +35,7 @@ namespace lab03 {
                 return lista.ToArray();
             } set {
                 praznaPolja = new Dictionary<int, bool>();
-                for (int i = 0; i < value.Length; i++)
+                for (int i = 0; i < value.Length; i++) if ((value[i]&0xFF) == 0)
                     praznaPolja[(value[i] >> 8) & 0xFF] = true;
                 polje = new MyCheckBox[W, H];
                 for (int i = 0; i < value.Length; i++) {
@@ -49,7 +49,11 @@ namespace lab03 {
             get => brPog;
             set {
                 brPog = value;
-                if (value == W*H-praznaPolja.Count) Ende.Invoke(this, EventArgs.Empty);
+                if (value == W*H-praznaPolja.Count) {
+                    foreach (int i in praznaPolja.Keys)
+                        polje[(i >> 4), (i & 0xF)].Checked = true;
+                    Ende.Invoke(this, EventArgs.Empty);
+                }
             }
         }
         public int dimPolja { get => polje == null ? 45 : polje[0, 0].Dim; }

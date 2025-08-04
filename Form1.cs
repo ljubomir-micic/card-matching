@@ -34,7 +34,8 @@ namespace lab03 {
             tabla = t ?? new Tabla(Program.data.W, Program.data.H, jeKarta: true);
             tabla.Ende += new EventHandler(Kraj);
 
-            this.elapsed = 0;
+            if (tabla == null)
+                this.elapsed = 0;
             
             timer = new System.Windows.Forms.Timer() { Interval = 1000 };
             timer.Tick += delegate { this.label1.Text = Stoperica.ToTime(++elapsed); };

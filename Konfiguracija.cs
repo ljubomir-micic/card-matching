@@ -59,7 +59,9 @@ namespace lab03
             rscLok = new TextBox() { Text = Program.data.resrcPath, Size = new Size(250, 0), Location = new Point(20, 20) };
             textBoxes = new TextBox[2];
             textBoxes[0] = new TextBox() { Text = Program.data.P.ToString(), Location = new Point(20, Height - 60 - 10) };
+            textBoxes[0].Leave += delegate { int max = (Duzina * Sirina) >> 1; if (int.Parse(textBoxes[0].Text) > max) textBoxes[0].Text = max.ToString(); if (int.Parse(textBoxes[0].Text) < 7) textBoxes[0].Text = "7"; };
             textBoxes[1] = new TextBox() { Text = Program.data.S.ToString(), Location = new Point(Width - 40 - textBoxes[0].Width, Height - 60 - 10) };
+            textBoxes[1].Leave += delegate { if (int.Parse(textBoxes[0].Text) < 5) textBoxes[0].Text = "5"; };
             for (int tb = 0; tb < 2; tb++) textBoxes[tb].KeyPress += delegate(object sender, KeyPressEventArgs e) { if (!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar)) e.Handled = true; };
             for (int i = 0; i < matrica.W; i++) {
                 for (int j = 0; j < matrica.H; j++) {
