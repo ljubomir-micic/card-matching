@@ -15,6 +15,7 @@ namespace lab03 {
         public int H { get; set; } = 5;
         public int P { get; set; } = 7;
         public int S { get; set; } = 5;
+        public int D { get; set; } = 45;
 
         public DataManager Save() {
             XmlTextWriter wr = null;

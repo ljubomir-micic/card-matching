@@ -32,11 +32,10 @@ namespace lab03 {
         }
         public bool jeKarta { get; set; }
         public bool Pogodak { get; set; }
-        public int Dim { get; set; } = 45;
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
-        public new int Width { get => Dim; }
-        public new int Height { get => Dim; }
+        public new int Width { get => base.Width; }
+        public new int Height { get => base.Height; }
         public static Permissions Permissions { get; set; } = Permissions.User;
         public new Image Image { get { try { return Image.FromFile(System.IO.Path.Combine(Program.data.resrcPath, this.broj.ToString() + ".png")); } catch { return null; } } }
         
@@ -47,15 +46,14 @@ namespace lab03 {
             }
         }
 
-        public MyCheckBox() { base.Width = base.Height = this.Dim = 45; }
+        public MyCheckBox(int dim = 45) { base.Width = base.Height = dim; }
 
         public MyCheckBox(int broj, int dim = 45, bool jeKarta = false) {
             this.Tag = this.broj = broj;
             this.jeKarta = jeKarta;
-            base.Width = base.Height = this.Dim = dim;
+            base.Width = base.Height = dim;
             this.Checked = this.Pogodak = false;
             this.X = this.Y = 0;
-            this.Dim = 45;
         }
 
         protected override void OnCheckedChanged(EventArgs e)

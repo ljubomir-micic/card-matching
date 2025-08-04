@@ -31,7 +31,7 @@ namespace lab03 {
             this.predajaToolStripMenuItem.BackColor = System.Drawing.Color.IndianRed;
             this.predajaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
 
-            tabla = t ?? new Tabla(Program.data.W, Program.data.H, jeKarta: true);
+            tabla = t ?? new Tabla(Program.data.W, Program.data.H, Program.data.D, jeKarta: true);
             tabla.Ende += new EventHandler(Kraj);
 
             if (tabla == null)
@@ -42,7 +42,7 @@ namespace lab03 {
             
             for (int i = 0; i < tabla.W; i++) {
                 for (int j = 0; j < tabla.H; j++) {
-                    tabla[i, j].Location = new System.Drawing.Point((int) (tabla.dimPolja*1.1*i)+35, (int) (tabla.dimPolja*1.1*j)+this.menuStrip1.Height+32); // +2 zbog razdvajanja od menustripa
+                    tabla[i, j].Location = new System.Drawing.Point((int) (tabla.D*1.1*i)+35, (int) (tabla.D*1.1*j)+this.menuStrip1.Height+32); // +2 zbog razdvajanja od menustripa
                     tabla[i, j].Click += delegate(object sender, EventArgs e) {
                         MyCheckBox m = (MyCheckBox) sender;
                         if (((int) m.Tag) == 0) return;
@@ -71,8 +71,8 @@ namespace lab03 {
                 }
             }
             
-            this.Width = (int) ((t == null ? Program.data.W : t.W) * tabla.dimPolja * 1.1 + 80);
-            this.Height = (int) ((t == null ? Program.data.H : t.H) * tabla.dimPolja * 1.1 + this.menuStrip1.Height + 100);
+            this.Width = (int) ((t == null ? Program.data.W : t.W) * tabla.D * 1.1 + 80);
+            this.Height = (int) ((t == null ? Program.data.H : t.H) * tabla.D * 1.1 + this.menuStrip1.Height + 100);
             this.ResumeLayout(false);
             this.timer.Start();
         }
@@ -101,7 +101,7 @@ namespace lab03 {
 
             this.restartToolStripMenuItem.Click += delegate { NovaIgra(); };
             this.konfiguracijaToolStripMenuItem.Click += delegate {
-                Konfiguracija k = new Konfiguracija();
+                Konfiguracija k = new Konfiguracija(tabla.D);
                 if (timer != null) timer.Stop();
                 k.ShowDialog();
                 if (timer != null) timer.Start();

@@ -22,6 +22,7 @@ namespace lab03 {
         public uint Elapsed { get; set; } = 0;
         public int W { get; set; }
         public int H { get; set; }
+        public int D { get; set; }
 
         [XmlArray("PoljePodaci")]
         [XmlArrayItem("PoljePodaciElement")]
@@ -40,7 +41,7 @@ namespace lab03 {
                 polje = new MyCheckBox[W, H];
                 for (int i = 0; i < value.Length; i++) {
                     int x = (value[i] >> 12) & 0xF, y = (value[i] >> 8) & 0xF;
-                    polje[x, y] = new MyCheckBox() { VALUE = (value[i]) };
+                    polje[x, y] = new MyCheckBox(D) { VALUE = (value[i]) };
                 }
             }
         }
@@ -56,24 +57,23 @@ namespace lab03 {
                 }
             }
         }
-        public int dimPolja { get => polje == null ? 45 : polje[0, 0].Dim; }
         public int LastCheck { get; set; } = -1;
         int BrojParova { get => Program.data.P; }
         int BrojSlika { get => Program.data.S; }
 
         // *U pokusaju da se naucim lepo da projektujem klase cak i u C# po Single Responsibility principu pored navike za spaghetti code*
         public MyCheckBoxPolje() { this.praznaPolja = new Dictionary<int, bool>(); }
-        public MyCheckBoxPolje(bool jeKarta = false) : this(6, 5, jeKarta: jeKarta) { }
-        public MyCheckBoxPolje(int x, int y, int size = 45, bool jeKarta = false) {
+        public MyCheckBoxPolje(int x, int y, int size, bool jeKarta = false) {
             praznaPolja = new Dictionary<int, bool>();
             NumberGenerator numberGenerator = new NumberGenerator(BrojSlika, BrojParova, x*y);
             W = x;
             H = y;
+            D = size;
 
             polje = new MyCheckBox[W, H];
             for (int i = 0; i < W; i++)
                 for (int j = 0; j < H; j++) {
-                    polje[i, j] = new MyCheckBox(broj: jeKarta ? numberGenerator.getNumber(Form1.r) : 0, dim: size, jeKarta: jeKarta) { X = i, Y = j };
+                    polje[i, j] = new MyCheckBox(broj: jeKarta ? numberGenerator.getNumber(Form1.r) : 0, dim: D, jeKarta: jeKarta) { X = i, Y = j };
                     if (jeKarta && (int) (polje[i, j].Tag) == 0) { praznaPolja[(i<<4)+j] = true; }
                     polje[i, j].Click += delegate(object sender, EventArgs e) { MyCheckBox m = ((MyCheckBox) sender); if (m.jeKarta) return; LastCheck = (m.X << 4) + m.Y; Click.Invoke(this, new EventArgs()); };
                 }
